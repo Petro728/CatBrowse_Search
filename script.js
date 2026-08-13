@@ -17,11 +17,12 @@ async function search() {
     let scored = [];
     for (let title in docs) {
       let text = docs[title].toLowerCase();
-      let safeQuery = escapeRegex(q);
+      let safeQuery = escapeRegex(q); // escape before regex
       let score = 0;
 
       // Keyword frequency (safe regex)
-      let count = (text.match(new RegExp(safeQuery, "gi")) || []).length;
+      let regex = new RegExp(safeQuery, "gi");
+      let count = (text.match(regex) || []).length;
       score += count;
 
       // Title boost
