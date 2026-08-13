@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>CatBrowse Search</title>
+  <title>PetroNet Browser Homepage</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🐾 Welcome to CatBrowse</h1>
-  <p>Your own search engine for CatOS, GuardianOS, Xenocode, and more.</p>
+  <h1>Welcome to PetroNet Browser</h1>
+  <p>Your gateway to CatOS, GuardianOS, Xenocode, and more.</p>
 
-  <!-- Search box -->
-  <input type="text" id="query" placeholder="Search..." />
-  <button onclick="search()">Go</button>
+  <div id="search">
+    <form onsubmit="search(); return false;">
+      <input type="text" id="query" placeholder="Search the web...">
+      <button type="submit">Search</button>
+    </form>
+  </div>
 
-  <!-- Results area -->
+  <!-- Results will appear here -->
   <div id="results"></div>
 
   <script src="script.js"></script>
