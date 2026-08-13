@@ -1,3 +1,4 @@
+// Escape regex special characters so queries like "Msg++" or "C++" work
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -19,7 +20,7 @@ async function search() {
       let safeQuery = escapeRegex(q);
       let score = 0;
 
-      // Keyword frequency
+      // Keyword frequency (safe regex)
       let count = (text.match(new RegExp(safeQuery, "gi")) || []).length;
       score += count;
 
@@ -31,8 +32,10 @@ async function search() {
       scored.push({ title, score, snippet: docs[title] });
     }
 
+    // Sort by score
     scored.sort((a, b) => b.score - a.score);
 
+    // Build output
     let output = scored.filter(r => r.score > 0)
       .map(r => `<p><b>${r.title}</b>: ${r.snippet}</p>`)
       .join("") || "No results found.";
