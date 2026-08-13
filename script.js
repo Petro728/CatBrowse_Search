@@ -1,8 +1,3 @@
-// Escape regex special characters so queries like "Msg++" or "C++" work
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 async function search() {
   let q = document.getElementById("query").value.toLowerCase();
   if (!q) {
@@ -17,12 +12,10 @@ async function search() {
     let scored = [];
     for (let title in docs) {
       let text = docs[title].toLowerCase();
-      let safeQuery = escapeRegex(q); // escape before regex
       let score = 0;
 
-      // Keyword frequency (safe regex)
-      let regex = new RegExp(safeQuery, "gi");
-      let count = (text.match(regex) || []).length;
+      // Keyword frequency (count occurrences by splitting)
+      let count = text.split(q).length - 1;
       score += count;
 
       // Title boost
