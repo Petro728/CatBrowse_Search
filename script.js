@@ -1,41 +1,45 @@
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 async function search() {
-  // Get the query from the input box
   let q = document.getElementById("query").value.toLowerCase();
-
-  // Load the JSON data file
-  let res = await fetch("data.json");
-  let docs = await res.json();
-
-  // Score each document
-  let scored = [];
-  for (let title in docs) {
-    let text = docs[title].toLowerCase();
-    let score = 0;
-
-    // Keyword frequency
-    let count = (text.match(new RegExp(q, "g")) || []).length;
-    score += count;
-
-    // Title boost
-    if (title.toLowerCase().includes(q)) {
-      score += 2;
-    }
-
-    // Push into results
-    scored.push({ title, score, snippet: docs[title] });
+  if (!q) {
+    document.getElementById("results").innerHTML = "Please enter a search term.";
+    return;
   }
 
-  // Sort by score (highest first)
-  scored.sort((a, b) => b.score - a.score);
+  try {
+    let res = await fetch("data.json");
+    let docs = await res.json();
 
-  // Display results
-  let output = "";
-  for (let r of scored) {
-    if (r.score > 0) {
-      output += `<p><b>${r.title}</b>: ${r.snippet}</p>`;
+    let scored = [];
+    for (let title in docs) {
+      let text = docs[title].toLowerCase();
+      let safeQuery = escapeRegex(q);
+      let score = 0;
+
+      // Keyword frequency
+      let count = (text.match(new RegExp(safeQuery, "gi")) || []).length;
+      score += count;
+
+      // Title boost
+      if (title.toLowerCase().includes(q)) {
+        score += 2;
+      }
+
+      scored.push({ title, score, snippet: docs[title] });
     }
-  }
 
-  document.getElementById("results").innerHTML =
-    output || "No results found.";
+    scored.sort((a, b) => b.score - a.score);
+
+    let output = scored.filter(r => r.score > 0)
+      .map(r => `<p><b>${r.title}</b>: ${r.snippet}</p>`)
+      .join("") || "No results found.";
+
+    document.getElementById("results").innerHTML = output;
+  } catch (err) {
+    document.getElementById("results").innerHTML = "Error loading search data.";
+    console.error(err);
+  }
 }
