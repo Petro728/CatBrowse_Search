@@ -1,0 +1,9 @@
+{
+  "CatOS": "CatOS is a fictional operating system designed by Petro. It features custom desktop environments, playful GUIs, and unique ecosystem tools.",
+  "GuardianOS": "GuardianOS simulates PETCON threat levels with a pygame GUI, filesystem, and scenario engine. It is inspired by Perimeter/Dead Hand systems.",
+  "Xenocode": "Xenocode is an alien-themed programming language ecosystem with its own interpreter, IDE, documentation, and test suite.",
+  "ReactorOS": "ReactorOS is a fictional nuclear reactor operating system built with C++ SDL2 and Winsock, featuring SCRAM logic and emergency countdowns.",
+  "BuddyTalk Messenger": "BuddyTalk Messenger is a custom MFC/Win32 chat client using the BTMSG protocol, Winsock networking, and a playful GUI.",
+  "Msg++": "Msg++ is a C++ messenger project with server, client, GUI, protocol, and encryption features.",
+  "FilmTrust": "FilmTrust is a Python GUI + audio project that generates PNG rating cards, integrates emoji fonts, and plays WAV sound packs."
+}
